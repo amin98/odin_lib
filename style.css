@@ -17,10 +17,13 @@ main {
     justify-content: space-between;
 }
 
+#top-container p {
+    font-size: 2rem;
+}
+
 #top-container div {
     display: flex;
     gap: 1rem;
-    ;
 }
 
 p {
