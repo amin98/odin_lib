@@ -1,8 +1,12 @@
 const bookShelf = document.getElementById('book-shelf');
 const form = document.getElementById('book-form');
 
+function convertToBook(obj) {
+  return new Book(obj.title, obj.author, obj.pages, obj.read, obj.image);
+}
 // let storage = [];
 let storage = JSON.parse(localStorage.getItem('books')) || [];
+storage = storage.map(convertToBook);
 
 function Book(title, author, pages, read, image) {
   this.title = title;
@@ -13,10 +17,11 @@ function Book(title, author, pages, read, image) {
 }
 
 Book.prototype.toggleRead = function () {
-  console.log('hello');
+  this.read = !this.read;
+  console.log("toggleRead status toggled", this.read)
 };
 
-console.log(storage[0])
+console.log(storage[0]);
 
 bookShelf.addEventListener('click', (e) => {
   const bookId = e.target.dataset.id;
@@ -26,11 +31,10 @@ bookShelf.addEventListener('click', (e) => {
     localStorage.setItem('books', JSON.stringify(storage));
     displayBooks();
   } else if (e.target.classList.contains('toggle-read')) {
-    storage[bookId].read = !storage[bookId].read;
-    console.log('book read status', storage[bookId].read);
-    localStorage.setItem('books', JSON.stringify(storage));
-
     storage[bookId].toggleRead();
+    // storage[bookId].read = !storage[bookId].read;
+    localStorage.setItem('books', JSON.stringify(storage));
+// console.log("read status form data:", storage[bookId].read)
     displayBooks();
   }
 });
